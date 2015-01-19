@@ -1,5 +1,9 @@
 package application;
 
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -82,6 +86,27 @@ public class MediaBar extends HBox
 					player.play();
 					videoButton.setText("||");
 				}
+			}
+		});
+		
+		//	Make the time slider reflect the video's progression.
+		player.currentTimeProperty().addListener(new InvalidationListener()
+		{
+			public void invalidated(Observable ov)
+			{
+				updateValue();
+			}
+		});
+	}
+	
+	private void updateValue()
+	{
+		Platform.runLater(new Runnable(){
+			public void run()
+			{
+				//	In seconds. Essentially, calculate a ratio based on milliseconds, and multiply by 100 to obtain the updated time in seconds.
+				//	The slider will move accordingly with the video's progression.
+				timeSlider.setValue(player.getCurrentTime().toMillis() / player.getTotalDuration().toMillis() * 100);
 			}
 		});
 	}
