@@ -20,7 +20,7 @@ public class Player extends BorderPane
 	public Player(String file)
 	{
 		//	Use File constructor to enable relative paths.
-		media = new Media(new File(file).toURI().toString());
+		media = new Media(file);
 		player = new MediaPlayer(media);
 		view = new MediaView(player);
 		mediaPane = new Pane();
@@ -36,5 +36,10 @@ public class Player extends BorderPane
 		mediaBar.setStyle("-fx-background-color: #BFC2C7");
 		
 		player.play();
+	}
+	
+	public MediaPlayer getMediaPlayer()
+	{
+		return player;
 	}
 }
