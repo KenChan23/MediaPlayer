@@ -1,5 +1,6 @@
 package application;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -8,8 +9,9 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 
-//	Extend horizontal box to contruct control bar.
+//	Extend horizontal box to construct control bar.
 public class MediaBar extends HBox
 {
 	private Slider timeSlider;
@@ -51,5 +53,36 @@ public class MediaBar extends HBox
 		getChildren().add(timeSlider);
 		getChildren().add(volumeLabel);
 		getChildren().add(volumeSlider);
+		
+		//	Set an action listener to the video button for pausing and playing the video.
+		videoButton.setOnAction(new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent e)
+			{
+				Status status = player.getStatus();
+				
+				if(status == Status.PLAYING)
+				{
+					//	Check if the video has already ended.
+					//	Restart the video.
+					if(player.getCurrentTime().greaterThanOrEqualTo(player.getTotalDuration()))
+					{
+						player.seek(player.getStartTime());
+						player.play();
+					}
+					else
+					{
+						player.pause();
+						videoButton.setText(">");
+					}
+				}
+				
+				//	If the video is paused, then if the button is pressed, then continue playing the video.
+				if(status == Status.PAUSED || status == Status.HALTED || status == Status.STALLED)
+				{
+					player.play();
+					videoButton.setText("||");
+				}
+			}
+		});
 	}
 }
