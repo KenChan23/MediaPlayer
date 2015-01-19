@@ -59,7 +59,8 @@ public class MediaBar extends HBox
 		getChildren().add(volumeSlider);
 		
 		//	Set an action listener to the video button for pausing and playing the video.
-		videoButton.setOnAction(new EventHandler<ActionEvent>(){
+		videoButton.setOnAction(new EventHandler<ActionEvent>()
+		{
 			public void handle(ActionEvent e)
 			{
 				Status status = player.getStatus();
@@ -89,12 +90,25 @@ public class MediaBar extends HBox
 			}
 		});
 		
-		//	Make the time slider reflect the video's progression.
+		//	Make the time slider reflect the video's progression as the video is running.
 		player.currentTimeProperty().addListener(new InvalidationListener()
 		{
 			public void invalidated(Observable ov)
 			{
 				updateValue();
+			}
+		});
+		
+		//	Make the time slider move to a specific point in the video.
+		timeSlider.valueProperty().addListener(new InvalidationListener()
+		{
+			public void invalidated(Observable ov)
+			{
+				if(timeSlider.isPressed())
+				{
+					//	Based on percentage of the total duration.
+					player.seek(player.getMedia().getDuration().multiply(timeSlider.getValue() / 100));
+				}
 			}
 		});
 	}
