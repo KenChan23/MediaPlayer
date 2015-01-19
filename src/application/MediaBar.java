@@ -82,7 +82,7 @@ public class MediaBar extends HBox
 				}
 				
 				//	If the video is paused, then if the button is pressed, then continue playing the video.
-				if(status == Status.PAUSED || status == Status.HALTED || status == Status.STALLED)
+				if(status == Status.PAUSED || status == Status.HALTED || status == Status.STALLED || status == Status.STOPPED)
 				{
 					player.play();
 					videoButton.setText("||");
@@ -127,7 +127,8 @@ public class MediaBar extends HBox
 	
 	private void updateValue()
 	{
-		Platform.runLater(new Runnable(){
+		Platform.runLater(new Runnable()
+		{
 			public void run()
 			{
 				//	In seconds. Essentially, calculate a ratio based on milliseconds, and multiply by 100 to obtain the updated time in seconds.

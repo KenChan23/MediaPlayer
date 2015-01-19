@@ -57,6 +57,7 @@ public class Main extends Application
 						try
 						{
 							player = new Player(file.toURI().toURL().toExternalForm());
+							player.setTop(menuBar);
 							Scene scene = new Scene(player, 720, 535, Color.BLACK);
 							primaryStage.setScene(scene);
 						}
