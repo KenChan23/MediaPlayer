@@ -111,6 +111,18 @@ public class MediaBar extends HBox
 				}
 			}
 		});
+		
+		//	Make the volume slider adjust the volume based on a specific point.
+		volumeSlider.valueProperty().addListener(new InvalidationListener()
+		{
+			public void invalidated(Observable ov)
+			{
+				if(volumeSlider.isPressed())
+				{
+					player.setVolume(volumeSlider.getValue() / 100);
+				}
+			}
+		});
 	}
 	
 	private void updateValue()

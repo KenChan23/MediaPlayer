@@ -19,7 +19,7 @@ public class Player extends BorderPane
 	
 	public Player(String file)
 	{
-		//	Use File contructor to enable relative paths.
+		//	Use File constructor to enable relative paths.
 		media = new Media(new File(file).toURI().toString());
 		player = new MediaPlayer(media);
 		view = new MediaView(player);
