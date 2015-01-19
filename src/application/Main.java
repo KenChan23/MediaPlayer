@@ -25,10 +25,8 @@ public class Main extends Application
 		try
 		{
 			Player player = new Player("media/codestars.mp4");
-			Scene scene = new Scene(player, 720, 480, Color.BLACK);
+			Scene scene = new Scene(player, 720, 510, Color.BLACK);
 			primaryStage.setScene(scene);
-			primaryStage.minWidthProperty().bind(scene.heightProperty().multiply(2));
-		    primaryStage.minHeightProperty().bind(scene.widthProperty().divide(2));
 			primaryStage.show();
 		}
 		catch(Exception e)
